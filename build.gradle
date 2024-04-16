@@ -62,6 +62,17 @@ dependencies {
 // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
   implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.4'
 
+  // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+  implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.24'
+// https://mvnrepository.com/artifact/org.springframework/spring-tx
+  implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.24'
+// https://mvnrepository.com/artifact/org.mybatis/mybatis
+
+  implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.14'
+  // https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
+  implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.1.2'
+
+
 
 
 
