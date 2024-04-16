@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 클라이언트의 요청을 받기 위해 필요한 컨테이너들이 정의되어 있으며 Controller(url과 관련), Annotation, ViewResolver, Interceptor 등의 설정-->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -12,15 +13,15 @@
 
     <!--WebServlet(name ="", value="/bbs/list" -->
     <!-- req.getRequestDispatcher("/views/bbs/list.jsp")-->
-       <mvc:annotation-driven></mvc:annotation-driven>
-       <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
 
-        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-            <property name="prefix" value="/WEB-INF/view/"></property>
-            <property name="suffix" value=".jsp"></property>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <property name="suffix" value=".jsp"></property>
 
 
-        </bean>
+    </bean>
 
     <context:component-scan base-package="org.fullstack4.springmvc.controller"/>
 </beans>

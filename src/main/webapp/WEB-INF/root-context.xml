@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Service, Repository(DAO), DB 등의 웹 환경에 독립적인(+ 비즈니스 로직과 관련된) 스프링 컨테이너들이 정의 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
