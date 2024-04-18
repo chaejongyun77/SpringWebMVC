@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.8//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.springmvc.mapper.BbsMapper">
+
+        <!-- root_context.xml에 작성한 mapper을 기준으로 찾음 -> bbsMapper.interface -> xml -->
+        <insert id="regist">
+            insert into tbl_bbs(user_id,title,content,display_date,reg_date,read_cnt,interest)
+            values (#{user_id},#{title},#{content},#{display_date},now(),#{read_cnt},#{interest})
+            <!-- row_count로 영향받은 행의 갯수 반환-->
+        </insert>
+        <select id="listAll" resultType="org.fullstack4.springmvc.domain.BbsVO">
+
+            SELECT no,user_id,title,content,display_date,reg_date,modify_date,read_cnt,interest
+            from tbl_bbs
+            ORDER BY no desc
+
+        </select>
+
+    <select id="view" resultType="org.fullstack4.springmvc.domain.BbsVO">
+        SELECT no,user_id,title,content,display_date,reg_date,modify_date,read_cnt,interest
+        from tbl_bbs
+        where no =#{no}
+    </select>
+
+    <update id="modify">
+       update tbl_bbs SET
+              user_id = #{user_id},
+              title = #{title},
+              content = #{content},
+              display_date = #{display_date},
+              modify_date =now(),
+              interest = #{interest}
+
+        where no = #{no}
+
+    </update>
+
+    <delete id="delete">
+        delete from tbl_bbs
+
+        where no = #{no}
+
+    </delete>
+
+</mapper>
