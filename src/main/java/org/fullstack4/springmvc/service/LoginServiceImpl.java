@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginServiceIf{
     public MemberDTO login_info(String user_id, String pwd) {
 
         MemberVO memberVO = loginMapper.login_info(user_id,pwd);
-        System.out.println("loing id and pwd " + user_id +pwd);
+
 
         MemberDTO memberDTO = null;
 
@@ -39,4 +39,5 @@ public class LoginServiceImpl implements LoginServiceIf{
 
         return memberDTO;
     }
+
 }

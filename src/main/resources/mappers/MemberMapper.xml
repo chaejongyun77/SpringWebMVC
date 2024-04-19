@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.8//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.springmvc.mapper.MemberMapper">
+
+    <!-- root_context.xml에 작성한 mapper을 기준으로 찾음 -> bbsMapper.interface -> xml -->
+
+    <insert id="member_join" >
+
+        insert into tbl_member(user_id, pwd, name, email, birthday,interest, addr1, addr2)
+        values(#{user_id},#{pwd},#{name},#{email},#{birthday},#{interest},#{addr1},#{addr2})
+
+    </insert>
+
+    <delete id="member_leave">
+        delete from tbl_member;
+
+    </delete>
+
+
+</mapper>

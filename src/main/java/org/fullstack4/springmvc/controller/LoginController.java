@@ -7,11 +7,13 @@ import org.fullstack4.springmvc.dto.MemberDTO;
 import org.fullstack4.springmvc.service.LoginServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Log4j2
 @Controller
@@ -21,35 +23,68 @@ public class LoginController {
 
     private final LoginServiceIf loginService;
     @RequestMapping(value="/login",method={RequestMethod.GET})
-    public void loginGET(){
+    public void loginGET(HttpServletRequest req,
+                         Model model){
         System.out.println("loginController loginGET입니다.");
+
+        String acc_url = req.getHeader("referer");
+        model.addAttribute("acc_url",acc_url);
 
     }
 
    @PostMapping("/login")
     public String loginPOST(Model model,
-                          @SessionAttribute(name="user_id",required = false) String user_id,
-                          String pwd,
+                            @Valid MemberDTO memberDTO,
+                            @RequestParam(name="acc_url", defaultValue = "/bbs/list",required = false) String acc_url,
+                            BindingResult bindingResult,
+                            HttpServletRequest req,
+
                           RedirectAttributes redirectAttributes){
 
+       System.out.println(acc_url);
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+            return "login/login";
+        }
 
+        MemberDTO loginMemberDTO =  loginService.login_info(memberDTO.getUser_id(),memberDTO.getPwd());
 
-       MemberDTO list =  loginService.login_info(user_id,pwd);
+        if(loginMemberDTO !=null){
+            // true가 기본 : 세션이 없으면 생성하여 리턴, false : 세션이 있으면 리턴, 없으면 생성안함
+            HttpSession session =req.getSession();
+            session.setAttribute("user_id",loginMemberDTO.getUser_id());
+            System.out.println("세션아이디 :" + session.getAttribute("user_id"));
 
-        if(list !=null){
-            model.addAttribute("user_id",list.getUser_id());
-            return "redirect:/bbs/list";
+            model.addAttribute("user_id",loginMemberDTO.getUser_id());
+            return "redirect:"+acc_url;
         }
         else{
+            redirectAttributes.addFlashAttribute("errors['err_user_info']","사용자 정보가 일치하지 않습니다.");
             return"/login/login";
         }
 
     }
 
     @RequestMapping(value="/logout")
-    public String logout(){
+    public String logout(HttpServletRequest req){
         System.out.println("loginController logout입니다.");
 
+        HttpSession session = req.getSession(false);
+        if(session!=null){
+            session.invalidate();; // 세션 삭제
+        }
         return "redirect:/bbs/list";
     }
+
+/*    @RequestMapping(value="/join")
+    public void joinGET(){
+
+
+    }
+
+    @PostMapping(value="/join")
+    public String joinPOST(){
+
+        return "";
+    }*/
 }

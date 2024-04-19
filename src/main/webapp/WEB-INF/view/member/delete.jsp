@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: user
-  Date: 2024-04-17
-  Time: 오전 9:29
+  Date: 2024-04-19
+  Time: 오후 5:07
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,7 +14,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -56,71 +56,31 @@
     </nav>
 
 </header>
-<br>
-<form name="frmdelete" id="frmdelete" method="post" action="/bbs/delete">
- <%--   <input type="hidden" name="no" id="no" value="${dto.no}">
-    <div>
-        <span>인덱스 : ${bbs.no}</span>
-    </div>
-    <div>
-        <span>아이디 : ${dto.user_id} </span>
-    </div>
-    <div>
-        <span>제목 : ${dto.title}</span>
-    </div>
-    <div>
-        <span>내용 :${dto.content} </span>
-    </div>
-    <div>
-        <span> 출력날짜 : ${dto.display_date}</span>
-    </div>
-    <div>
-        <button type="button" onclick ="location.href='/bbs/list'">목록</button>
-        <button type="button" onclick ="location.href='/bbs/modify?no=${dto.no}'">수정</button>
-        <button type="button" onclick ="goDelete()">삭제</button>
-    </div>--%>
-     <div class="container">
-         <div class="row">
-             <div class="col">
-                 <span class="input-group-text" id="basic-addon1">게시판번호</span>
-             </div>
-             <div class="col">
-                 <span>${dto.no}</span>
 
-             </div>
-         </div>
-         <br>
-         <div class="row">
-             <div class="col">
-                 <span class="input-group-text" id="basic-addon2">제목</span>
-             </div>
-             <div class="col">
-                 <span>${dto.title}</span>
-             </div>
+<div class="container">
 
-         </div>
-         <br>
-         <div class="row">
-             <div class="col">
-                 <span class="input-group-text" id="basic-addon3">내용</span>
-             </div>
-             <div class="col">
-                 <span>${dto.content}</span>
-             </div>
+    <form id="loginfrm" name="loginFrm" method="post" action="/member/leave">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+        </svg>
+        <h1 class="h3 mb-3 fw-normal">회원탈퇴</h1>
 
-         </div>
-         <br>
-         <div class="d-grid gap-2 col-6 mx-auto">
-             <button class="btn btn-primary" type="button" onclick ="location.href='/bbs/list'">목록</button>
-             <button class="btn btn-primary"  type="button" onclick ="location.href='/bbs/modify?no=${dto.no}'">수정</button>
-             <button class="btn btn-primary" type="button" onclick ="goDelete()">삭제</button>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" name="user_id" >
+            <label for="floatingInput">ID</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
+            <label for="floatingPassword">Password</label>
+        </div>
+        <br>
+    <input type="submit" value="회원탈퇴">
 
 
-         </div>
+    </form>
 
-     </div>
+</div>
 
-</form>
 <footer class="py-3 my-4" >
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
@@ -131,15 +91,5 @@
     </ul>
     <p class="text-center text-muted">© 2021 Company, Inc</p>
 </footer>
-<script
-    function goDelete(){
-        const frm = document.getElementById("frmdelete");
-        let confirm_flag = confirm("해당 게시글을 삭제하시겠습니까?");
-        if(confirm_flag){
-            frm.submit();
-        }
-
-    }
-</script>
 </body>
 </html>

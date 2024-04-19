@@ -82,6 +82,7 @@ public class BbsController {
 
         BbsDTO dto = bbsServiceIf.view(no);
 
+
         model.addAttribute("bbs",dto);
 
     }
@@ -92,6 +93,7 @@ public class BbsController {
 
         int result = bbsServiceIf.modify(bbsDTO);
 
+        System.out.println("modify display_date : " +bbsDTO.getDisplay_date());
         if(result>0){
             return "redirect:/bbs/view?no="+bbsDTO.getNo();
         }else{
