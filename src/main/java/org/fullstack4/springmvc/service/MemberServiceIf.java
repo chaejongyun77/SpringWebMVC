@@ -10,4 +10,6 @@ public interface MemberServiceIf {
     int member_join(MemberDTO memberDTO);
 
     int member_leave(String id, String pwd);
+
+    int member_update (MemberDTO memberDTO);
 }

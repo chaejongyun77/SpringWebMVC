@@ -20,37 +20,32 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="/bbs/list">게시판</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/bbs/list">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/view">마이페이지</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="/login/logout">로그아웃</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
+
                     <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link" href="/member/leave">회원탈퇴</a>
                     </li>
+
                 </ul>
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
+
             </div>
         </div>
     </nav>
@@ -60,26 +55,25 @@
 <div class="container">
 
     <form id="loginfrm" name="loginFrm" method="post" action="/member/leave">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-        </svg>
-        <h1 class="h3 mb-3 fw-normal">회원탈퇴</h1>
+        <br>    <br>
+        <h1 class="h3 mb-3 fw-normal" style="text-align: center">회원탈퇴</h1>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" name="user_id" >
-            <label for="floatingInput">ID</label>
+            <input type="text" class="form-control" id="user_id" name="user_id" value="${sessionScope.memberDTO.user_id}" readonly >
+            <label for="user_id">ID</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
-            <label for="floatingPassword">Password</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd">
+            <label for="pwd">Password</label>
         </div>
         <br>
-    <input type="submit" value="회원탈퇴">
+    <input type="submit" id="member_leave" value="회원탈퇴">
 
 
     </form>
 
 </div>
+
 
 <footer class="py-3 my-4" >
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -91,5 +85,24 @@
     </ul>
     <p class="text-center text-muted">© 2021 Company, Inc</p>
 </footer>
+
+<Script>
+
+    const member_leave = document.querySelector("#member_leave");
+
+
+    if(member_leave !=null) {
+        member_leave.addEventListener("click", function (e) {
+            e.preventDefault();
+            const confirm_message = confirm("삭제하시겠습니까?");
+            if(confirm_message ){
+                document.loginFrm.submit();
+            }
+
+
+            
+        });
+    }
+</Script>
 </body>
 </html>

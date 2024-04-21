@@ -48,4 +48,6 @@
 
     </context:component-scan>
     <context:component-scan base-package="org.fullstack4.springmvc.service"></context:component-scan>
+
+
 </beans>

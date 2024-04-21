@@ -1,6 +1,7 @@
 package org.fullstack4.springmvc.service;
 
 import lombok.RequiredArgsConstructor;
+import org.fullstack4.springmvc.domain.BbsVO;
 import org.fullstack4.springmvc.domain.MemberVO;
 import org.fullstack4.springmvc.dto.MemberDTO;
 import org.fullstack4.springmvc.mapper.MemberMapper;
@@ -34,4 +35,15 @@ public class MemberServiceImpl implements MemberServiceIf{
 
         return result;
     }
+
+    @Override
+    public int member_update(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class); //bbsVO.setUserId(bbsDTO.getUser_id())를 대신함
+
+        int result = memberMapper.member_update(memberVO);
+
+        return result;
+    }
+
+
 }

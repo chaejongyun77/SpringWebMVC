@@ -52,8 +52,7 @@ public class LoginController {
         if(loginMemberDTO !=null){
             // true가 기본 : 세션이 없으면 생성하여 리턴, false : 세션이 있으면 리턴, 없으면 생성안함
             HttpSession session =req.getSession();
-            session.setAttribute("user_id",loginMemberDTO.getUser_id());
-            System.out.println("세션아이디 :" + session.getAttribute("user_id"));
+            session.setAttribute("memberDTO",loginMemberDTO);
 
             model.addAttribute("user_id",loginMemberDTO.getUser_id());
             return "redirect:"+acc_url;
@@ -73,7 +72,7 @@ public class LoginController {
         if(session!=null){
             session.invalidate();; // 세션 삭제
         }
-        return "redirect:/bbs/list";
+        return "redirect:/login/login";
     }
 
 /*    @RequestMapping(value="/join")

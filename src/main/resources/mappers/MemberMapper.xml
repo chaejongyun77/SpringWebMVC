@@ -13,9 +13,20 @@
     </insert>
 
     <delete id="member_leave">
-        delete from tbl_member;
-
+        delete from tbl_member
+        where user_id = #{user_id} and pwd = #{pwd}
     </delete>
+    <update id="member_update">
+        update tbl_member set
+                              pwd =#{pwd},
+                              email=#{email},
+                              interest = #{interest},
+                              addr1 =#{addr1},
+                              addr2=#{addr2}
+
+        where user_id = #{user_id}
+
+    </update>
 
 
 </mapper>

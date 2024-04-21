@@ -80,7 +80,7 @@
             <c:if test="${sessionScope.user_id == null}">
                 <input type="button" id="login_button" value="로그인">
             </c:if>
-            <input type="button" id="pwd_search" value="비밀번호찾기">  <input type="button" id="sign_up" value="회원가입">
+         <input type="button" id="signup_button" value="회원가입" onclick="location.href='/member/join'">
             <c:if test="${sessionScope.user_id != null}">
                 <input type="button" id="logout_button" value="로그아웃">
             </c:if>
@@ -91,34 +91,10 @@
 </div>
 
 
-
-
-
-
-
-
-
-   <%-- <form id="loginfrm" name="loginFrm" method="post" action="/login/login">
-        <input type="hidden" name="acc_url" id="acc_url" value="${acc_url}"/>
-        주소 :${acc_url}
-        아이디 :  <input type="text" name="user_id" id="user_id" >
-        비밀번호 :  <input type="password" name ="pwd" id="pwd" value=""><br>
-        <input type="checkbox" name="idSave" id="idSave" > 아이디저장 <input type="checkbox" name="autoLogin" id="autoLogin">자동로그인<br>
-        <c:if test="${sessionScope.user_id == null}">
-            <input type="button" id="login_button" value="로그인">
-        </c:if>
-        <input type="button" id="pwd_search" value="비밀번호찾기">  <input type="button" id="sign_up" value="회원가입">
-        <c:if test="${sessionScope.user_id != null}">
-            <input type="button" id="logout_button" value="로그아웃">
-        </c:if>
-
-    </form>--%>
-
-
 <script>
     const login_button = document.querySelector("#login_button");
     const logout_button = document.querySelector("#logout_button");
-    const sign_up_button =document.querySelector("#sign_up");
+    const signup_button =document.querySelector("#signup_button");
     if(login_button !=null) {
         login_button.addEventListener("click", function (e) {
             e.preventDefault();
@@ -133,10 +109,14 @@
         }, false);
     }
 
-    sign_up_button.addEventListener("click",function(e){
-        e.preventDefault();
-        location.href="/member/join";
-    });
+ /*   if(signup_button !=null) {
+        signup_button.addEventListener("click", function (e) {
+            console.log("안녕");
+            e.preventDefault();
+
+            location.href = "/bbs/list";
+        });
+    }*/
 </script>
 
 </body>

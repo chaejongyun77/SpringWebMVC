@@ -22,43 +22,31 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="/bbs/list">게시판</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/bbs/list">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/view">마이페이지</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="/login/logout">로그아웃</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
+
                     <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link" href="/member/leave">회원탈퇴</a>
                     </li>
 
                 </ul>
                 <form class="d-flex">
 
-                    <c:if test="${sessionScope.user_id != null}">
-                    &nbsp;<input type="button" id="logout_button" value="로그아웃">
-                    </c:if>
-                        <c:if test="${sessionScope.user_id != null}">
-                        &nbsp;<input type="button" id="leave_member" value="회원탈퇴">
-                        </c:if>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.user_id}님 환영합니다." disabled>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
 
             </div>
         </div>
@@ -79,15 +67,19 @@
     <thead>
     <tr>
         <th scope="col">게시판번호</th>
+        <th scope="col">작성자</th>
+
         <th scope="col">제목</th>
         <th scope="col">작성일</th>
         <th scope="col">조회수</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${bbsList}" var="list">
+    <c:forEach items="${bbsList}" var="list"  varStatus="status">
         <tr>
-        <th scope="row"> ${list.no}</th>
+        <th scope="row"> ${status.count}</th>
+        <th scope="row"> ${list.user_id}</th>
+
             <th scope="row">  <a href="/bbs/view?no=${list.no}"> ${list.title}</a></th>
         <th scope="row"> ${list.reg_date}</th>
         <th scope="row"> ${list.read_cnt}</th>
@@ -108,5 +100,36 @@
     </ul>
     <p class="text-center text-muted">© 2021 Company, Inc</p>
 </footer>
+<Script>
+    const logout_button = document.querySelector("#logout_button");
+    const leave_member = document.querySelector("#leave_member");
+    const view_button = document.querySelector("#view_button");
+
+
+    if(logout_button !=null) {
+        logout_button.addEventListener("click", function (e) {
+            e.preventDefault();
+            location.href = "/login/logout";
+
+        }, false);
+    }
+    if(leave_member !=null) {
+        leave_member.addEventListener("click", function (e) {
+            e.preventDefault();
+            location.href = "/member/leave";
+
+        }, false);
+    }
+
+    if(view_button !=null) {
+        view_button.addEventListener("click", function (e) {
+            e.preventDefault();
+            location.href = "/member/view";
+
+        }, false);
+    }
+
+</Script>
 </body>
+
 </html>
