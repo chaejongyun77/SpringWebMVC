@@ -43,4 +43,45 @@
 
     </delete>
 
+    <select id="bbsTotalCount" resultType="int">
+        select count(*) from tbl_bbs
+                        <where>
+                            <foreach collection="search_type" item="type" open="(" close=")" separator=" OR ">
+                                <if test="type=='t'.toString()">
+                                    title like concat('%',#{search_word},'%')
+                                </if>
+                                <if test="type=='u'.toString()">
+                                    user_id  like concat('%',#{search_word},'%')
+                                </if>
+
+                            </foreach>
+
+                        </where>
+
+
+    </select>
+
+    <select id="bbsListByPage" resultType="org.fullstack4.springmvc.domain.BbsVO">
+        SELECT no,user_id,title,content,display_date,reg_date,modify_date,read_cnt,interest
+        from tbl_bbs
+        <where>
+            <foreach collection="search_type" item="type" open="(" close=")" separator=" OR ">
+                <if test="type=='t'.toString()">
+                     title like concat('%',#{search_word},'%')
+                </if>
+                <if test="type=='u'.toString()">
+                    user_id  like concat('%',#{search_word},'%')
+                </if>
+
+            </foreach>
+        <!--<if test="'type == 't'.toString()">
+
+        </if>-->
+
+        </where>
+
+        ORDER BY no desc
+        limit #{page_skip_count} , #{page_size}
+    </select>
+
 </mapper>

@@ -9,4 +9,8 @@ public interface MemberMapper {
 
     int member_leave(@Param("user_id") String user_id, @Param("pwd")String pwd);
     int member_update(MemberVO memberVO);
+
+    MemberVO member_info(String user_id);
+
+    String idCheck(String id);
 }

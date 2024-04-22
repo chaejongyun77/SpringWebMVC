@@ -1,4 +1,4 @@
-package org.fullstack4.springmvc.sample.mapper;
+package org.fullstack4.springmvc.mapper;
 
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.springmvc.mapper.TimeMapper;

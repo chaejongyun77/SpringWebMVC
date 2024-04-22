@@ -53,7 +53,7 @@
                 <form class="d-flex">
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
-
+                </form>
             </div>
         </div>
     </nav>
@@ -65,16 +65,16 @@
     <h1 style="text-align: center">마이페이지</h1>
     <br>
     <form class="row g-3" name="frmRegist" id="frmRegist" method="post" action="/member/modify">
-        <div class="col-md-6">
+        <div class="col-12">
             <label for="inputEmail4" class="form-label">아이디</label>
             <input type="text" class="form-control" id="inputEmail4" name="user_id" value="${sessionScope.memberDTO.user_id}" readonly>
             <div id="div_err_user_id" style="display: none"></div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12">
             <label for="inputPassword4" class="form-label">비밀번호</label>
             <input type="password" class="form-control" id="inputPassword4" name="pwd">
             <div id="div_err_pwd" style="display: none"></div>
-        </div>
+        </div>0
         <div class="col-12">
             <label for="inputAddress" class="form-label">이름</label>
             <input type="text" class="form-control" id="inputName" placeholder="홍길동" name="name" value="${sessionScope.memberDTO.name}">

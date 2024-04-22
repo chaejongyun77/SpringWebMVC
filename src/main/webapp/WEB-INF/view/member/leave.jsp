@@ -45,7 +45,7 @@
                 <form class="d-flex">
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
-
+                </form>
             </div>
         </div>
     </nav>

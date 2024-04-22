@@ -16,6 +16,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+
 </head>
 
 <body class="text-center">
@@ -74,8 +75,14 @@
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pwd">
             <label for="floatingPassword">Password</label>
         </div>
+        <div>
+            <span style="color:red ; "> ${error_msg}</span>
+        </div>
+        <div>
+        <input type="checkbox" name="auto_login" id="auto_login" style="font-size:16px" >자동로그인  </span>
+        </div>
     <br>
-        <div class="checkbox mb-3">
+      <%--  <div class="checkbox mb-3">
 
             <c:if test="${sessionScope.user_id == null}">
                 <input type="button" id="login_button" value="로그인">
@@ -84,6 +91,11 @@
             <c:if test="${sessionScope.user_id != null}">
                 <input type="button" id="logout_button" value="로그아웃">
             </c:if>
+        </div>--%>
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" id="login_button" type="button">로그인</button>
+            <button class="btn btn-primary" id="signup_button" type="button">회원가입</button>
         </div>
 
 
@@ -94,14 +106,14 @@
 <script>
     const login_button = document.querySelector("#login_button");
     const logout_button = document.querySelector("#logout_button");
-    const signup_button =document.querySelector("#signup_button");
-    if(login_button !=null) {
+    const signup_button = document.querySelector("#signup_button");
+    if (login_button != null) {
         login_button.addEventListener("click", function (e) {
             e.preventDefault();
             document.loginFrm.submit();
         });
     }
-    if(logout_button !=null) {
+    if (logout_button != null) {
         logout_button.addEventListener("click", function (e) {
             e.preventDefault();
             location.href = "/login/logout";
@@ -109,14 +121,17 @@
         }, false);
     }
 
- /*   if(signup_button !=null) {
+    if (signup_button != null) {
         signup_button.addEventListener("click", function (e) {
-            console.log("안녕");
+
             e.preventDefault();
 
-            location.href = "/bbs/list";
+            location.href = "/member/join";
         });
-    }*/
+    }
+
+
+
 </script>
 
 </body>

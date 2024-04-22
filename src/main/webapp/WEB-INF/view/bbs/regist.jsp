@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title> <meta charset="utf-8">
+    <title>regist</title> <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -57,7 +57,7 @@
                 <form class="d-flex">
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
-
+                </form>
             </div>
         </div>
     </nav>
@@ -116,57 +116,62 @@
 
 
 
-
+<div class="container">
 
 
     <form name="frmRegist" id="frmRegist" method="post" action="/bbs/regist">
-        <div class="container">
-<div class="input-group mb-3">
-    <span class="input-group-text">아이디</span>
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="id"  id="user_id" name="user_id">
-    <div id="div_err_user_id" style="display: none"></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">아이디</span>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="id"  id="user_id" name="user_id" value="${sessionScope.user_id}" readonly>
+            <div id="div_err_user_id" style="display: none"></div>
+        </div>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" >제목</span>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="title" id="title" name="title">
+            <div id="div_err_title" style="display: none"></div>
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-text">내용</span>
+            <textarea class="form-control" id="content" aria-label="With textarea" name="content"></textarea>
+            <div id="div_err_content" style="display: none"></div>
+        </div>
+
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text">날짜 </span>
+            <input type="date" name="display_date" id="display_date" class="form-control">
+            <div id="div_err_display_date" style="display: none"></div>
+        </div>
+
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text">관심사항</span>
+            <div class="form-control">
+                음악 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="음악" name="interest" id="interest_0" aria-label="Checkbox for following text input">&nbsp;
+                축구 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="축구" name="interest" id="interest_1"  aria-label="Checkbox for following text input">&nbsp;
+                배구 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="배구" name="interest" id="interest_2" aria-label="Checkbox for following text input">&nbsp;
+                농구 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="농구" name="interest" id="interest_3" aria-label="Checkbox for following text input">&nbsp;
+            </div>
+
+            <div id="div_err_interest" style="display: none"></div>
+        </div>
+
+        <br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" type="submit" id="submit_button">등록</button>
+
+        </div>
+        <%--   <div class="col-12">
+               <br>
+               <button type="submit" class="btn btn-primary">등록</button>
+           </div>--%>
+
+
+    </form>
 </div>
 
-    <div class="input-group mb-3">
-        <span class="input-group-text" >제목</span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="title" id="title" name="title">
-        <div id="div_err_title" style="display: none"></div>
-    </div>
-    <div class="input-group">
-        <span class="input-group-text">내용</span>
-        <textarea class="form-control" id="content" aria-label="With textarea" name="content"></textarea>
-        <div id="div_err_content" style="display: none"></div>
-    </div>
-    <br>
-    <div class="input-group mb-3">
-        <span class="input-group-text">날짜 </span>
-        <input type="date" name="display_date" id="display_date" class="form-control">
-        <div id="div_err_display_date" style="display: none"></div>
-    </div>
-    <br>
-    <div class="input-group mb-3">
-        <span class="input-group-text">관심사항</span>
-        <div class="form-control">
-            음악 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="음악" name="interest" id="interest_0" aria-label="Checkbox for following text input">&nbsp;
-            축구 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="축구" name="interest" id="interest_1"  aria-label="Checkbox for following text input">&nbsp;
-            배구 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="배구" name="interest" id="interest_2" aria-label="Checkbox for following text input">&nbsp;
-            농구 &nbsp;<input class="form-check-input mt-0" type="checkbox" value="농구" name="interest" id="interest_3" aria-label="Checkbox for following text input">&nbsp;
-        </div>
-        <div id="div_err_interest" style="display: none"></div>
-    </div>
-    <br>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-primary" type="submit">등록</button>
-
-        </div>
-     <%--   <div class="col-12">
-            <br>
-            <button type="submit" class="btn btn-primary">등록</button>
-        </div>--%>
-
-
-        </div>
-    </form>
 
 
 <footer class="py-3 my-4" >
@@ -180,4 +185,13 @@
     <p class="text-center text-muted">© 2021 Company, Inc</p>
 </footer>
 </body>
+<script>
+ /*   const submit_button = document.querySelector("#submit_button");
+    submit_button.addEventListener("click",function (e){
+       e.preventDefault();
+       docu
+    });*/
+
+</script>
+
 </html>

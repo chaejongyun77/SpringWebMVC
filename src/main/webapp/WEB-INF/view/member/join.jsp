@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <html>
 <head>
     <title>회원가입</title>
@@ -15,7 +16,18 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <style>
+        .id_ok{
+            color:#008000;
+            display: none;
+        }
 
+        .id_already{
+            color:#6A82FB;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -61,16 +73,19 @@
     <h1 style="text-align: center">회원가입</h1>
     <br>
     <form class="row g-3" name="frmRegist" id="frmRegist" method="post" action="/member/join">
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="inputEmail4" name="user_id">
-            <div id="div_err_user_id" style="display: none"></div>
-        </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">비밀번호</label>
+        <div class="input-group mb-3">
+            <label for="user_id" class="form-label">아이디 : &nbsp;</label>
+            <input type="text" class="form-control" id="user_id" name="user_id">
+            <button class="btn btn-outline-secondary" type="button" id="search_id" >중복확인</button>
+            <div id="div_err_user_id" style="display: none"></div> &nbsp;&nbsp;
+
+            <label for="inputPassword4" class="form-label">비밀번호 : &nbsp;</label>
             <input type="password" class="form-control" id="inputPassword4" name="pwd">
             <div id="div_err_pwd" style="display: none"></div>
         </div>
+        <span class="id_ok">사용 가능한 아이디입니다.</span>
+        <span class="id_already">누군가 이 아이디를 사용하고 있어요.</span>
+
         <div class="col-12">
             <label for="inputAddress" class="form-label">이름</label>
             <input type="text" class="form-control" id="inputName" placeholder="홍길동" name="name">
@@ -88,7 +103,7 @@
         </div>
         <div class="col-12">
             <label for="inputAddress" class="form-label">주소</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="addr1">
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="addr1" onclick="address();">
             <div id="div_err_addr1" style="display: none"></div>
         </div>
         <div class="col-12">
@@ -138,6 +153,40 @@
     <p class="text-center text-muted">© 2021 Company, Inc</p>
 </footer>
 <script>
+    const check_id = document.querySelector("#search_id");
+    check_id.addEventListener("click",function(e){
+        e.preventDefault();
+
+        var user_id = $('#user_id').val(); //id값이 "id"인 입력란의 값을 저장
+        $.ajax({
+
+            url:'/member/idCheck', //Controller에서 요청 받을 주소
+            type:'post', //POST 방식으로 전달
+            data:{user_id:user_id},
+            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
+                    console.log(cnt);
+                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+
+                    $('.id_ok').css("display","inline-block");
+                    $('.id_already').css("display", "none");
+
+                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                    $('.id_already').css("display","inline-block");
+                    $('.id_ok').css("display", "none");
+                    alert("아이디를 다시 입력해주세요");
+                    $('#user_id').val('');
+                }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+
+    });
+
+
+
+
     const serverValidResult ={};
 
     <c:forEach items ="${errors}" var ="err">
@@ -152,6 +201,19 @@
     </c:forEach>
 
     console.log(serverValidResult);
+
+    function address() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                if(data.userSelectedType == "R"){
+                document.querySelector("#inputAddress").value= data.roadAddress;
+            }
+                else{
+                    document.querySelector("#inputAddress").value= data.jibunAddress;
+                }
+            }
+        }).open();
+    }
 </script>
 </body>
 </html>

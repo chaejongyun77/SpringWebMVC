@@ -9,15 +9,13 @@ import org.fullstack4.springmvc.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -36,7 +34,9 @@ public class MemberController
     HttpSession session = req.getSession();
 
     MemberDTO dto =  new MemberDTO();
-    dto = (MemberDTO)session.getAttribute("memberDTO");
+    dto = memberService.member_info((String)session.getAttribute("user_id"));
+        System.out.println(session.getAttribute("session id : " + dto));
+
     String[] list = dto.getInterest().split(",");
 
     model.addAttribute("interest", list);
@@ -126,6 +126,17 @@ public class MemberController
         }
 
     }
+    //아이디 중복체크
+    @PostMapping("/idCheck")
+    @ResponseBody
+    public String idCheck(@RequestParam("user_id") String id
+                      ) {
+        System.out.println("check id " + id);
+        System.out.println("중복체크 post");
+        String cnt = memberService.idCheck(id);
 
+        System.out.println("컨트롤러 cnt : " + cnt);
+        return cnt;
 
+    }
 }

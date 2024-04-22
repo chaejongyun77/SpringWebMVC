@@ -1,4 +1,4 @@
-package org.fullstack4.springmvc.sample;
+package org.fullstack4.springmvc;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;

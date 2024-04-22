@@ -3,6 +3,8 @@ package org.fullstack4.springmvc.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.springmvc.dto.BbsDTO;
+import org.fullstack4.springmvc.dto.PageRequestDTO;
+import org.fullstack4.springmvc.dto.PageResponseDTO;
 import org.fullstack4.springmvc.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +28,35 @@ public class BbsController {
 
     private final BbsServiceIf bbsServiceIf;
     @GetMapping("/list")
-    public void list(Model model){
+    public void list(@Valid PageRequestDTO pageRequestDTO,
+                     BindingResult bindingResult,
+                     Model model,
+                     RedirectAttributes redirectAttributes){
+
+        System.out.println("list get : "  +pageRequestDTO.toString());
+        if(bindingResult.hasErrors()){
+            System.out.println("bbs controller list error");
+            redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
+        }
+        PageResponseDTO<BbsDTO> responseDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        System.out.println("responseDTO : " + responseDTO.toString());
+        model.addAttribute("responseDTO",responseDTO);
+
+      /*  List<BbsDTO> bbsDTOList = new ArrayList<>();
+        bbsDTOList = bbsServiceIf.ListAll();
+        model.addAttribute("bbsList",bbsDTOList);*/
+
+    }
+
+
+    /*public void list(Model model){
 
 
         List<BbsDTO> bbsDTOList = new ArrayList<>();
         bbsDTOList = bbsServiceIf.ListAll();
         model.addAttribute("bbsList",bbsDTOList);
 
-    }
+    }*/
     @GetMapping("/view")
     public void view(@RequestParam(name= "no",defaultValue = "0") int no,
 
@@ -48,13 +71,13 @@ public class BbsController {
     }
     @GetMapping("/regist")
     public void registGET(){
-
+        System.out.println("등록 get");
     }
     @PostMapping("/regist")
     public String registPOST(@Valid BbsDTO bbsDTO, //체크된 값을 가져와서 binding을 시켜줌
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes){
-
+        System.out.println("등록 post");
 
         if(bindingResult.hasErrors()){
             System.out.println("regist post에 error발생");
@@ -64,6 +87,7 @@ public class BbsController {
         }
 
         int result = bbsServiceIf.regist(bbsDTO);
+        System.out.println("글쓰기 result : " + result);
         if(result>0){
             return "redirect:/bbs/list";
         }else{

@@ -42,12 +42,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/member/leave">회원탈퇴</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/regist">글 등록</a>
+                    </li>
 
                 </ul>
                 <form class="d-flex">
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
-
+                </form>
             </div>
         </div>
     </nav>
@@ -63,6 +66,13 @@
     </c:forEach>
 </ul>--%>
 <div class="container">
+    <form>
+        <input type="checkbox">제목 <input type="checkbox"> 글내용 <br>
+
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" >
+        검색기간 : <input type="button" value="등록일 시작"> <input type="button" value="등록일 끝">
+        <button type="button" >검색</button> <button type="button"> 초기화</button>
+    </form>
 <table class="table table-striped table-hover">
     <thead>
     <tr>
@@ -75,7 +85,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${bbsList}" var="list"  varStatus="status">
+    <c:forEach items="${responseDTO.dtoList}" var="list"  varStatus="status">
         <tr>
         <th scope="row"> ${status.count}</th>
         <th scope="row"> ${list.user_id}</th>
@@ -87,7 +97,70 @@
             </c:forEach>
 
     </tbody>
+
+
 </table>
+    <nav aria-label="Page navigation example">
+        <ul class=" pagination justify-content-center">
+            <li class="page-item
+            <c:if test="${responseDTO.prev_page_flag ne true}"> disabled</c:if>
+        ">
+                <!--a class="page-link" data-num="1" href="page=1">Previous</a-->
+                <a class="page-link"
+                   data-num="
+                <c:choose>
+                    <c:when test="${responseDTO.prev_page_flag}">
+                        ${responseDTO.page_block_start-1}
+                    </c:when>
+                    <c:otherwise>1</c:otherwise>
+                </c:choose>"
+                   href="
+                <c:choose>
+                    <c:when test="${responseDTO.prev_page_flag}">
+                        ${responseDTO.linkParams}&page=${responseDTO.page_block_start-1}
+                    </c:when>
+                    <c:otherwise>#</c:otherwise>
+                </c:choose>
+                ">Previous</a>
+            </li>
+            <c:forEach begin="${responseDTO.page_block_start}"
+                       end="${responseDTO.page_block_end}"
+                       var="page_num">
+                <li class="page-item
+                        <c:if test="${responseDTO.page == page_num}"> active</c:if> ">
+                    <a class="page-link" data-num="${page_num}"
+                       href="<c:choose>
+                            <c:when test="${responseDTO.page == page_num}">#</c:when>
+                            <c:otherwise>
+                                ${responseDTO.linkParams}&page=${page_num}
+                            </c:otherwise>
+                         </c:choose>">${page_num}</a>
+                </li>
+            </c:forEach>
+            <li class="page-item
+                    <c:if test="${responseDTO.next_page_flag ne true}"> disabled</c:if>">
+                <a class="page-link"
+                   data-num="
+                    <c:choose>
+                        <c:when test="${responseDTO.next_page_flag}">
+                            ${responseDTO.page_block_end+1}
+                        </c:when>
+                        <c:otherwise>
+                            ${responseDTO.page_block_end}
+                        </c:otherwise>
+                    </c:choose>"
+                   href="<c:choose>
+                        <c:when test="${responseDTO.next_page_flag}">
+                            ${responseDTO.linkParams}&page=
+                            ${responseDTO.page_block_end+1}
+                        </c:when>
+                        <c:otherwise>#</c:otherwise>
+                    </c:choose>">Next</a>
+
+            </li>
+        </ul>
+    </nav>
+
 </div>
 
 <footer class="py-3 my-4" >

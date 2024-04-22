@@ -1,4 +1,4 @@
-package org.fullstack4.springmvc.sample;
+package org.fullstack4.springmvc;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;

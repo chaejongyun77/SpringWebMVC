@@ -27,6 +27,12 @@
         where user_id = #{user_id}
 
     </update>
-
+    <select  id="member_info">
+        select * from tbl_member
+        where user_id= #{user_id}
+    </select>
+    <select id="idCheck"  >
+        SELECT COUNT(*) FROM tbl_member WHERE user_id= #{user_id}
+    </select>
 
 </mapper>

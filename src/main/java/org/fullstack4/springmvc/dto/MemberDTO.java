@@ -15,9 +15,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class MemberDTO {
-    @NotBlank
+
     private String user_id;
-    @NotBlank
+
     private String pwd;
 
     private String name ="";

@@ -45,5 +45,27 @@ public class MemberServiceImpl implements MemberServiceIf{
         return result;
     }
 
+    @Override
+    public MemberDTO member_info(String user_id) {
+        MemberVO memberVO = memberMapper.member_info(user_id);
+
+
+        MemberDTO memberDTO = null;
+
+
+            memberDTO = modelMapper.map(memberVO,MemberDTO.class);
+
+
+
+        return memberDTO;
+    }
+
+    @Override
+    public String idCheck(String id) {
+        String cnt = memberMapper.idCheck(id);
+        System.out.println("cnt: " + cnt);
+        return cnt;
+    }
+
 
 }

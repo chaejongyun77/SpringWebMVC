@@ -51,7 +51,7 @@
                 <form class="d-flex">
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
-
+                </form>
             </div>
         </div>
     </nav>
@@ -113,7 +113,7 @@
          </table>
          <div class="d-grid gap-2 col-6 mx-auto">
              <button class="btn btn-primary" type="button" onclick ="location.href='/bbs/list'">목록</button>
-             <button class="btn btn-primary"  type="button" onclick ="location.href='/bbs/modify?no=${dto.no}'">수정</button>
+             <button class="btn btn-primary"  type="button"  id="btn_modify">수정</button>
              <button class="btn btn-primary" type="button" onclick ="goDelete()">삭제</button>
 
 
@@ -173,6 +173,22 @@
         }
 
     }
+
+    document.querySelector("#btn_modify").addEventListener("click", function () {
+        let login_id = `${sessionScope.user_id}`;
+        let post_id = `${dto.user_id}`;
+
+        if(login_id == post_id) {
+           const confirm_msg =  confirm("해당 게시글을 수정하시겠습니까?");
+           if(confirm_msg){
+           location.href="/bbs/modify?no=${dto.no}";
+           }
+
+        } else {
+            alert("작성자만 수정할 수 있습니다.");
+            return false;
+        }
+    })
 </script>
 </body>
 </html>

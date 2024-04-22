@@ -12,8 +12,8 @@
        http://mybatis.org/schema/mybatis-spring.xsd">
 
 
-    <!--    <bean class="org.fullstack4.springmvc.sample.SampleDAO"/>-->
-    <!--    <bean class="org.fullstack4.springmvc.sample.SampleService"/>-->
+    <!--    <bean class="org.fullstack4.springmvc.SampleDAO"/>-->
+    <!--    <bean class="org.fullstack4.springmvc.SampleService"/>-->
 
     <context:component-scan base-package="org.fullstack4.springmvc.sample"/>
 
