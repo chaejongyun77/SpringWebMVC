@@ -24,7 +24,7 @@ public class CommonException {
 
 
     }*/
-    @ResponseBody
+ /*   @ResponseBody
     @ExceptionHandler(Exception.class)
     public String except(Exception e){
 
@@ -36,7 +36,7 @@ public class CommonException {
         });
         sb.append("</ul>");
         return sb.toString();
-    }
+    }*/
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound(){

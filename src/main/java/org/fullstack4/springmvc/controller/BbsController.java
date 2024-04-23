@@ -9,15 +9,17 @@ import org.fullstack4.springmvc.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Log4j2
 @Controller
@@ -33,13 +35,14 @@ public class BbsController {
                      Model model,
                      RedirectAttributes redirectAttributes){
 
-        System.out.println("list get : "  +pageRequestDTO.toString());
+
         if(bindingResult.hasErrors()){
             System.out.println("bbs controller list error");
             redirectAttributes.addFlashAttribute("errors",bindingResult.getAllErrors());
         }
+        System.out.println( pageRequestDTO.getSearch_word() );
         PageResponseDTO<BbsDTO> responseDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
-        System.out.println("responseDTO : " + responseDTO.toString());
+
         model.addAttribute("responseDTO",responseDTO);
 
       /*  List<BbsDTO> bbsDTOList = new ArrayList<>();
@@ -140,5 +143,123 @@ public class BbsController {
     public void list2(String s1, int i2){
 
     }
+    @RequestMapping(value="/fileUpload",method= RequestMethod.GET)
+        public String fileUploadGET(){
+            return "/bbs/fileUpload";
+        }
+
+    @RequestMapping(value="/fileUpload",method=RequestMethod.POST)
+
+    public String fileUploadPost(
+            @RequestParam("file")MultipartFile file
+    ){
+        String uploadFolder ="D:\\java4\\spring\\springweb\\springmvc\\src\\main\\webapp\\Upload";
+        String fileRealName = file.getOriginalFilename();
+
+        long size= file.getSize();
+        String fileExt = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 엑셀파일/xxx.xls => 파일 확장자
+    /*    System.out.println("=========예옛날파일");
+        System.out.println("uploadFolder" +uploadFolder);
+        System.out.println("fileRealName" + fileRealName);
+        System.out.println("size " +size);
+        System.out.println("fileExt" +fileExt);
+*/
+        //새로운 파일명 생성
+        UUID uuid = UUID.randomUUID();
+        String[] uuids = uuid.toString().split("-");
+        String newName = uuids[0];
+
+    /*    System.out.println("=========uuid파일");
+        System.out.println("uuid" +uuid);
+        System.out.println("uuids" + uuids);
+        System.out.println("newName " +newName);*/
+
+        File saveFile = new File(uploadFolder + "\\"+newName + fileExt);
+        System.out.println("파일명 : "+ uploadFolder + "\\"+newName + fileExt);
+
+        try{
+            file.transferTo(saveFile);
+        }catch(IllegalStateException e){
+            e.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return "/bbs/fileUpload";
+
+
+    }
+
+    @RequestMapping(value="/fileUpload2",method=RequestMethod.POST)
+
+    public String fileUploadPost2(
+            MultipartHttpServletRequest files)
+    {
+        String uploadFolder ="D:\\java4\\spring\\springweb\\springmvc\\src\\main\\webapp\\Upload";
+        List<MultipartFile> list = files.getFiles("files");
+
+        for(int i=0; i<list.size();i++){
+            String fileRealName= list.get(i).getOriginalFilename();
+            long size= list.get(i).getSize();
+            String fileExt = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+
+            //새로운 파일명 생성
+            UUID uuid = UUID.randomUUID();
+            String[] uuids = uuid.toString().split("-");
+            String newName = uuids[0];
+            File saveFile = new File(uploadFolder + "\\"+newName + fileExt);
+            System.out.println("파일명 : "+ uploadFolder + "\\"+newName + fileExt);
+
+            try{
+                list.get(i).transferTo(saveFile);
+            }catch(IllegalStateException e){
+                e.printStackTrace();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+/*
+
+        String fileRealName = file.getOriginalFilename();
+
+
+        String fileExt = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length()); // 엑셀파일/xxx.xls => 파일 확장자
+        System.out.println("=========예옛날파일");
+        System.out.println("uploadFolder" +uploadFolder);
+        System.out.println("fileRealName" + fileRealName);
+        System.out.println("size " +size);
+        System.out.println("fileExt" +fileExt);
+
+        //새로운 파일명 생성
+        UUID uuid = UUID.randomUUID();
+        String[] uuids = uuid.toString().split("-");
+        String newName = uuids[0];
+
+        System.out.println("=========uuid파일");
+        System.out.println("uuid" +uuid);
+        System.out.println("uuids" + uuids);
+        System.out.println("newName " +newName);
+
+        File saveFile = new File(uploadFolder + "\\"+newName + fileExt);
+        System.out.println("파일명 : "+ uploadFolder + "\\"+newName + fileExt);
+
+        try{
+            file.transferTo(saveFile);
+        }catch(IllegalStateException e){
+            e.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return "/bbs/fileUpload";*/
+        return "/bbs/fileUpload";
+    }
 
 }
+
+
+

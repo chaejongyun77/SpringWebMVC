@@ -36,6 +36,8 @@ public class BbsServiceTests
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .page_size(10)
+                .search_type(new String[]{"t","u"})
+                .search_word("cjy205")
                 .build();
         int totalCount = bbsServiceIf.bbsTotalCount(pageRequestDTO);
 
@@ -48,6 +50,8 @@ public class BbsServiceTests
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .page_size(10)
+                .search_type(new String[]{"t","u"})
+                .search_word("cjy205")
                 .build();
         PageResponseDTO<BbsDTO> responseDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
 

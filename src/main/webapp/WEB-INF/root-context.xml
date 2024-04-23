@@ -42,12 +42,16 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml"></property>
     </bean>
+    <!-- mapper객체 사용하려고 선언 (이 패키지 하위 관리하기 위해) autowired사용을 위해 @controller,@repostiroy등등 -->
     <mybatis:scan base-package="org.fullstack4.springmvc.mapper"></mybatis:scan>
 
     <context:component-scan base-package="org.fullstack4.springmvc.config">
 
     </context:component-scan>
     <context:component-scan base-package="org.fullstack4.springmvc.service"></context:component-scan>
+
+
+
 
 
 </beans>

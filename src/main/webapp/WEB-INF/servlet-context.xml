@@ -37,6 +37,11 @@
     </bean>
     <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
 
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+            <property name="maxUploadSize" value="10240000"/>
+            <property name="defaultEncoding" value="utf-8"/>
+    </bean>
 
 
 </beans>

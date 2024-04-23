@@ -37,5 +37,7 @@ public class BbsDTO {
     private LocalDate reg_date;
     private LocalDate modify_date;
     private String interest;
+    @Min(value=0)
+    private int reply_cnt=0;
 }
 

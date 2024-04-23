@@ -62,7 +62,7 @@ public class LoginController {
 
             if(auto_login !=null) {
                 if (auto_login.equals("on")) {
-                    Cookie cookie = cookieutil.getCookie("user_id", loginMemberDTO.getUser_id(), "/", 60);
+                    Cookie cookie = cookieutil.getCookie("user_id", loginMemberDTO.getUser_id(), "/", 60*60*60);
 
                     resp.addCookie(cookie);
 

@@ -34,15 +34,14 @@ public class LoginCheckFilter implements Filter {
         CookieUtil cookieutil = new CookieUtil();
         HttpSession session = req.getSession();
 
-/*
         if(cookieutil.readCookie(req) != null && !cookieutil.readCookie(req).equals("")){
             String user_id =cookieutil.readCookie(req);
-            System.out.println("user_id" + user_id);
+
             session.setAttribute("user_id",user_id);
             chain.doFilter(request,response);
 
             return;
-        }*/
+        }
 
 
         if(path.equals("/member/join")) {

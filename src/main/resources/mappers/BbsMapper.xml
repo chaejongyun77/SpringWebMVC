@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.8//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack4.springmvc.mapper.BbsMapper">
+    <sql id="whereCondition">
+        <if test="search_type != null">
+            <where>
+
+            <foreach collection="search_type" item="type" open="(" close=")" separator=" OR ">
+                <if test="type=='t'.toString()">
+                    title like concat('%',#{search_word},'%')
+                </if>
+                <if test="type=='u'.toString()">
+                    user_id  like concat('%',#{search_word},'%')
+                </if>
+
+            </foreach>
+
+            </where>
+        </if>
+        <if test="search_date1 != null and search_date1 != '' and search_date2 != null and search_date2 != ''" >
+            and reg_date BETWEEN #{search_date1} and #{search_date2}
+        </if>
+
+
+    </sql>
 
         <!-- root_context.xml에 작성한 mapper을 기준으로 찾음 -> bbsMapper.interface -> xml -->
         <insert id="regist">
@@ -45,18 +67,7 @@
 
     <select id="bbsTotalCount" resultType="int">
         select count(*) from tbl_bbs
-                        <where>
-                            <foreach collection="search_type" item="type" open="(" close=")" separator=" OR ">
-                                <if test="type=='t'.toString()">
-                                    title like concat('%',#{search_word},'%')
-                                </if>
-                                <if test="type=='u'.toString()">
-                                    user_id  like concat('%',#{search_word},'%')
-                                </if>
-
-                            </foreach>
-
-                        </where>
+        <include refid="whereCondition"></include>
 
 
     </select>
@@ -64,24 +75,17 @@
     <select id="bbsListByPage" resultType="org.fullstack4.springmvc.domain.BbsVO">
         SELECT no,user_id,title,content,display_date,reg_date,modify_date,read_cnt,interest
         from tbl_bbs
-        <where>
-            <foreach collection="search_type" item="type" open="(" close=")" separator=" OR ">
-                <if test="type=='t'.toString()">
-                     title like concat('%',#{search_word},'%')
-                </if>
-                <if test="type=='u'.toString()">
-                    user_id  like concat('%',#{search_word},'%')
-                </if>
-
-            </foreach>
-        <!--<if test="'type == 't'.toString()">
-
-        </if>-->
-
-        </where>
+        <include refid="whereCondition"></include>
 
         ORDER BY no desc
         limit #{page_skip_count} , #{page_size}
     </select>
+
+    <update id="update_reply_cnt">
+
+            UPDATE tbl_bbs SET reply_cnt = reply_cnt +1 WHERE idx =${bbs_idx}
+
+
+    </update>
 
 </mapper>

@@ -24,6 +24,8 @@ public class BbsMapperTests
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .page_size(10)
+                .search_type(new String[]{"t","u"})
+                .search_word("test")
                 .build();
         int totalCount = bbsMapepr.bbsTotalCount(pageRequestDTO);
 
@@ -36,6 +38,8 @@ public class BbsMapperTests
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .page_size(10)
+                .search_type(new String[]{"t","u"})
+                .search_word("test")
                 .build();
         List<BbsVO> bbsList = bbsMapepr.bbsListByPage(pageRequestDTO);
 

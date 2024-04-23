@@ -49,7 +49,7 @@
                 </ul>
                 <form class="d-flex">
 
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.memberDTO.user_id}님 환영합니다." disabled>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="${sessionScope.user_id}님 환영합니다." disabled>
                 </form>
             </div>
         </div>
@@ -66,12 +66,13 @@
     </c:forEach>
 </ul>--%>
 <div class="container">
-    <form>
-        <input type="checkbox">제목 <input type="checkbox"> 글내용 <br>
+    <form name="frmSearch" id="frmSearch" method="get" acton="/bbs/list">
+        <input type="checkbox" id="search_title" name="search_type" value="t">제목 <input type="checkbox" id="search_user" name="search_type" value="u"> 작성자 <br>
 
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search" >
-        검색기간 : <input type="button" value="등록일 시작"> <input type="button" value="등록일 끝">
-        <button type="button" >검색</button> <button type="button"> 초기화</button>
+        <input class="form-control" id="search_box" name="search_word" type="search" placeholder="Search" aria-label="Search" >
+        <br>
+        검색기간 : 등록일  <input type="date" id="search_date1" name="search_date1"  >  ~ <input type="date" id="search_date2" name="search_date2" >
+        <button type="submit"  id="search_button" >검색</button> <button type="button" id="reset_button"> 초기화</button>
     </form>
 <table class="table table-striped table-hover">
     <thead>
@@ -86,8 +87,10 @@
     </thead>
     <tbody>
     <c:forEach items="${responseDTO.dtoList}" var="list"  varStatus="status">
+ <!--  총 개시물 수 - varStatus.index ) - ( (현재페이지 번호 - 1 ) * 보여질 게시글 갯수 ) -->
+
         <tr>
-        <th scope="row"> ${status.count}</th>
+        <th scope="row"> ${(responseDTO.total_count -status.index )- ((responseDTO.page-1) * responseDTO. page_block_size)}</th>
         <th scope="row"> ${list.user_id}</th>
 
             <th scope="row">  <a href="/bbs/view?no=${list.no}"> ${list.title}</a></th>
@@ -123,19 +126,25 @@
                 </c:choose>
                 ">Previous</a>
             </li>
+
             <c:forEach begin="${responseDTO.page_block_start}"
                        end="${responseDTO.page_block_end}"
                        var="page_num">
+
                 <li class="page-item
                         <c:if test="${responseDTO.page == page_num}"> active</c:if> ">
                     <a class="page-link" data-num="${page_num}"
                        href="<c:choose>
                             <c:when test="${responseDTO.page == page_num}">#</c:when>
                             <c:otherwise>
+
                                 ${responseDTO.linkParams}&page=${page_num}
+
                             </c:otherwise>
                          </c:choose>">${page_num}</a>
                 </li>
+<%--                 &search_type=${requestDTO.search_type[0]}&search_word=${responseDTO.search_word}&search_date1=${responseDTO.search_date1}&search_date2=${responseDTO.search_date2}--%>
+
             </c:forEach>
             <li class="page-item
                     <c:if test="${responseDTO.next_page_flag ne true}"> disabled</c:if>">
@@ -149,8 +158,7 @@
                             ${responseDTO.page_block_end}
                         </c:otherwise>
                     </c:choose>"
-                   href="<c:choose>
-                        <c:when test="${responseDTO.next_page_flag}">
+                   href="<c:choose><c:when test="${responseDTO.next_page_flag}">
                             ${responseDTO.linkParams}&page=
                             ${responseDTO.page_block_end+1}
                         </c:when>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.8//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.springmvc.mapper.BbsReplyMapper">
+   <insert id ="replyRegist" >
+
+        INSERT into tbl_bbs_reply(bbs_idx,user_id,title,reg_date)
+        values (#{bbs_idx},#{user_id},#{title},now())
+
+   </insert>
+
+    <select id="replyList" resultType="org.fullstack4.springmvc.domain.BbsReplyVO">
+        select idx,bbs_idx,user_id,title,reg_date,modify_date
+        from tbl_bbs_reply
+        order by idx desc
+
+    </select>
+
+</mapper>

@@ -53,7 +53,7 @@ public class PageRequestDTO {
     private int page_block_end=1; // 페이지 네비게이션의 끝 페이지 번호입니다. 이는 페이지 블록 사이즈와 현재 페이지 번호를 통해 계산됩니다
 
     private String[] search_type;
-    private String search_word;
+   private String search_word;
     private String search_date1;
     private String search_date2;
 
