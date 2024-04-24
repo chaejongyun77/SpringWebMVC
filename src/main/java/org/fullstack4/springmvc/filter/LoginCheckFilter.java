@@ -1,10 +1,6 @@
 package org.fullstack4.springmvc.filter;
 
-import lombok.RequiredArgsConstructor;
-import org.fullstack4.springmvc.dto.MemberDTO;
-import org.fullstack4.springmvc.service.MemberServiceIf;
 import org.fullstack4.springmvc.util.CookieUtil;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

@@ -1,7 +1,6 @@
 package org.fullstack4.springmvc.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.springmvc.dto.BbsDTO;
 import org.fullstack4.springmvc.dto.BbsReplyDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,10 +14,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class BbsReplyServiceTests {
     @Autowired
     private BbsReplyServiceIf bbsReplyServiceIf;
+
     @Test
     public void testReplyRegist(){
         BbsReplyDTO bbsReplyDTO = BbsReplyDTO.builder()
-                .bbs_idx(51)
+                .bbs_idx(52)
                 .user_id("test")
                 .title("제목 테스트")
 

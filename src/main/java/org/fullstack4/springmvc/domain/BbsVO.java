@@ -22,5 +22,5 @@ public class BbsVO {
     private LocalDate reg_date;
     private LocalDate modify_date;
     private String interest;
-    private int reply_cnt=0;
+    private int reply_cnt;
 }

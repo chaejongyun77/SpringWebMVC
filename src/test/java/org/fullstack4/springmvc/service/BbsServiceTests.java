@@ -4,11 +4,9 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.springmvc.dto.BbsDTO;
 import org.fullstack4.springmvc.dto.PageRequestDTO;
 import org.fullstack4.springmvc.dto.PageResponseDTO;
-import org.fullstack4.springmvc.service.BbsServiceIf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 

@@ -3,7 +3,6 @@ package org.fullstack4.springmvc.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Arrays;
 import java.util.List;
 @Data
 public class PageResponseDTO<E> {

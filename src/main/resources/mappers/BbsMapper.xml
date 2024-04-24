@@ -81,11 +81,6 @@
         limit #{page_skip_count} , #{page_size}
     </select>
 
-    <update id="update_reply_cnt">
 
-            UPDATE tbl_bbs SET reply_cnt = reply_cnt +1 WHERE idx =${bbs_idx}
-
-
-    </update>
 
 </mapper>

@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -18,6 +20,7 @@
 
 </head>
 <body>
+
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -67,11 +70,30 @@
 </ul>--%>
 <div class="container">
     <form name="frmSearch" id="frmSearch" method="get" acton="/bbs/list">
-        <input type="checkbox" id="search_title" name="search_type" value="t">제목 <input type="checkbox" id="search_user" name="search_type" value="u"> 작성자 <br>
+        <input type="checkbox" id="search_title" name="search_type" value="t"
 
-        <input class="form-control" id="search_box" name="search_word" type="search" placeholder="Search" aria-label="Search" >
+    <c:forEach items="${responseDTO.search_type}" var="type">
+
+            <c:if test="${fn:contains(type,'t') }">
+                checked
+        </c:if>
+        </c:forEach>
+
+    >
+    제목 <input type="checkbox" id="search_user" name="search_type" value="u"
+
+    <c:forEach items="${responseDTO.search_type}" var="type">
+    <c:if test="${fn:contains(type,'u') }">
+              checked
+    </c:if>
+    </c:forEach>
+
+
+    > 작성자 <br>
+
+        <input class="form-control" id="search_box" name="search_word" type="search" placeholder="Search" aria-label="Search" value="${responseDTO.search_word}" >
         <br>
-        검색기간 : 등록일  <input type="date" id="search_date1" name="search_date1"  >  ~ <input type="date" id="search_date2" name="search_date2" >
+        검색기간 : 등록일  <input type="date" id="search_date1" name="search_date1" value="${responseDTO.search_date1}"  >  ~ <input type="date" id="search_date2" name="search_date2" value="${responseDTO.search_date2}" >
         <button type="submit"  id="search_button" >검색</button> <button type="button" id="reset_button"> 초기화</button>
     </form>
 <table class="table table-striped table-hover">
@@ -93,7 +115,7 @@
         <th scope="row"> ${(responseDTO.total_count -status.index )- ((responseDTO.page-1) * responseDTO. page_block_size)}</th>
         <th scope="row"> ${list.user_id}</th>
 
-            <th scope="row">  <a href="/bbs/view?no=${list.no}"> ${list.title}</a></th>
+            <th scope="row">  <a href="/bbs/view?no=${list.no}"> ${list.title}</a> ....${list.reply_cnt}</th>
         <th scope="row"> ${list.reg_date}</th>
         <th scope="row"> ${list.read_cnt}</th>
         </tr>
@@ -185,6 +207,7 @@
     const logout_button = document.querySelector("#logout_button");
     const leave_member = document.querySelector("#leave_member");
     const view_button = document.querySelector("#view_button");
+    const reset_button = document.querySelector("#reset_button");
 
 
     if(logout_button !=null) {
@@ -209,6 +232,16 @@
 
         }, false);
     }
+
+    reset_button.addEventListener("click",function(e){
+       e.preventDefault();
+       document.querySelector("#search_title").checked = '';
+       document.querySelector("#search_user").checked = '';
+       document.querySelector("#search_box").value = '';
+       document.querySelector("#search_date1").value = '';
+       document.querySelector("#search_date2").value = '';
+
+    });
 
 </Script>
 </body>

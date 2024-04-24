@@ -24,7 +24,6 @@ public class BbsReplyDTO {
       private int bbs_idx;
       private String user_id;
       private String title;
-      private String content;
       private LocalDate reg_date;
       private LocalDate modify_date;
 

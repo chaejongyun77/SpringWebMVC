@@ -2,9 +2,7 @@ package org.fullstack4.springmvc.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.springmvc.dto.BbsDTO;
 import org.fullstack4.springmvc.dto.MemberDTO;
-import org.fullstack4.springmvc.service.LoginServiceIf;
 import org.fullstack4.springmvc.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Map;
 
 @Log4j2
 @Controller

@@ -1,7 +1,6 @@
 package org.fullstack4.springmvc.service;
 
 import lombok.RequiredArgsConstructor;
-import org.fullstack4.springmvc.domain.BbsVO;
 import org.fullstack4.springmvc.domain.MemberVO;
 import org.fullstack4.springmvc.dto.MemberDTO;
 import org.fullstack4.springmvc.mapper.MemberMapper;

@@ -38,6 +38,6 @@ public class BbsDTO {
     private LocalDate modify_date;
     private String interest;
     @Min(value=0)
-    private int reply_cnt=0;
+    private int reply_cnt;
 }
 

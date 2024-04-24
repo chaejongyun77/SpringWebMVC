@@ -2,7 +2,6 @@ package org.fullstack4.springmvc.mapper;
 
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.springmvc.domain.BbsReplyVO;
-import org.fullstack4.springmvc.dto.BbsReplyDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

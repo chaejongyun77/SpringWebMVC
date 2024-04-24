@@ -2,7 +2,6 @@ package org.fullstack4.springmvc.mapper;
 
 import org.fullstack4.springmvc.domain.BbsVO;
 import org.fullstack4.springmvc.dto.PageRequestDTO;
-import org.fullstack4.springmvc.mapper.BbsMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

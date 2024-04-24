@@ -3,8 +3,10 @@ package org.fullstack4.springmvc.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.springmvc.dto.BbsDTO;
+import org.fullstack4.springmvc.dto.BbsReplyDTO;
 import org.fullstack4.springmvc.dto.PageRequestDTO;
 import org.fullstack4.springmvc.dto.PageResponseDTO;
+import org.fullstack4.springmvc.service.BbsReplyServiceIf;
 import org.fullstack4.springmvc.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +29,7 @@ public class BbsController {
 
 
     private final BbsServiceIf bbsServiceIf;
+    private final BbsReplyServiceIf bbsReplyServiceIf;
     @GetMapping("/list")
     public void list(@Valid PageRequestDTO pageRequestDTO,
                      BindingResult bindingResult,
@@ -67,8 +68,9 @@ public class BbsController {
 
 
         BbsDTO dto = bbsServiceIf.view(no);
+        List<BbsReplyDTO> bbsReplyDTO = bbsReplyServiceIf.replyList(no);
 
-
+        model.addAttribute("bbsReplyDTO",bbsReplyDTO);
         model.addAttribute("dto",dto);
 
     }
@@ -131,6 +133,7 @@ public class BbsController {
     public String deletePOST(@RequestParam(name= "no",defaultValue = "0") int no
     ){
 
+        System.out.println("게시판 ㅂ삭제 번호 :"+no);
 
         int result = bbsServiceIf.delete(no);
         if(result>0){

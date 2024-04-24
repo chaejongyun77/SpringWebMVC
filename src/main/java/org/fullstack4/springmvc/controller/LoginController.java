@@ -2,12 +2,9 @@ package org.fullstack4.springmvc.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.springmvc.dto.BbsDTO;
 import org.fullstack4.springmvc.dto.MemberDTO;
 import org.fullstack4.springmvc.service.LoginServiceIf;
-import org.fullstack4.springmvc.service.MemberServiceIf;
 import org.fullstack4.springmvc.util.CookieUtil;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

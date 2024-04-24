@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -58,30 +60,11 @@
 
 </header>
 <br>
-<form name="frmdelete" id="frmdelete" method="post" action="/bbs/delete">
- <%--   <input type="hidden" name="no" id="no" value="${dto.no}">
-    <div>
-        <span>인덱스 : ${bbs.no}</span>
-    </div>
-    <div>
-        <span>아이디 : ${dto.user_id} </span>
-    </div>
-    <div>
-        <span>제목 : ${dto.title}</span>
-    </div>
-    <div>
-        <span>내용 :${dto.content} </span>
-    </div>
-    <div>
-        <span> 출력날짜 : ${dto.display_date}</span>
-    </div>
-    <div>
-        <button type="button" onclick ="location.href='/bbs/list'">목록</button>
-        <button type="button" onclick ="location.href='/bbs/modify?no=${dto.no}'">수정</button>
-        <button type="button" onclick ="goDelete()">삭제</button>
-    </div>--%>
-     <div class="container">
 
+
+     <div class="container">
+         <form name="frmdelete" id="frmdelete" method="post" action="/bbs/delete?no=${dto.no}">
+            <%-- <input type="hidden" id="no" name="no" value="${dto.no}">--%>
          <table class="table table-striped">
              <colgroup>
                  <col style="width:10%;" /><col style="width:23%;" /><col style="width:10%;" /><col style="width:23%;" />
@@ -118,39 +101,66 @@
 
 
          </div>
+         </form>
 
-        <%-- <div class="row">
-             <div class="col">
-                 <span class="input-group-text" id="basic-addon1">게시판번호</span>
-             </div>
-             <div class="col">
-                 <span>${dto.no}</span>
+         <table class="table table-striped table-hover">
+             <thead>
+             <tr>
+                 <th scope="col">댓글번호</th>
+                 <th scope="col">제목</th>
+                 <th scope="col">아이디</th>
+                 <th scope="col">날짜</th>
 
-             </div>
-         </div>
-         <br>
-         <div class="row">
-             <div class="col">
-                 <span class="input-group-text" id="basic-addon2">제목</span>
-             </div>
-             <div class="col">
-                 <span>${dto.title}</span>
-             </div>
+             </tr>
+             </thead>
+             <tbody>
+                <c:choose>
+                 <c:when test="${not empty bbsReplyDTO}">
+                     <c:forEach items="${bbsReplyDTO}" var="list"  varStatus="status">
 
-         </div>
-         <br>
-         <div class="row">
-             <div class="col">
-                 <span class="input-group-text" id="basic-addon3">내용</span>
-             </div>
-             <div class="col">
-                 <span>${dto.content}</span>
-             </div>
+                         <tr>
 
-         </div>
-         <br>
+                             <th scope="row"> ${status.count}</th>
+                             <th scope="row"> ${list.user_id}</th>
+                             <th scope="row">  <a href="/bbs/view?no=${list.idx}"> ${list.title}</a></th>
+                             <th scope="row"> ${list.reg_date}</th>
+                         </tr>
+                     </c:forEach>
+                 </c:when>
 
---%>
+                    <c:otherwise>
+                             <tr>
+                                     <td>등록된 댓글이 존재하지 않습니다.</td>
+
+                             </tr>
+                    </c:otherwise>
+                </c:choose>
+            <tr>
+
+
+                <td colspan="4">
+                    <form id="cmtFrm" name="cmtFrm "method="post" action="/bbsReply/regist">
+                        <input type="hidden" id="bbs_idx" name="bbs_idx" value="${dto.no}">
+                        <input type="hidden" id="user_id" name="user_id" value="${sessionScope.user_id}">
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control"
+                               name="title" id="title" placeholder="댓글을입력하세요.">
+                    </div>
+
+
+                    <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary" type="submit" id="cmt_submit">등록</button>
+                    </div>
+                    </form>
+                </td>
+            </tr>
+             </tbody>
+
+         </table>
+
+
+
      </div>
 
 </form>
@@ -165,6 +175,14 @@
     <p class="text-center text-muted">© 2021 Company, Inc</p>
 </footer>
 <script>
+   /* const cmt_submit = document.querySelector("#cmt_submit");
+    cmt_submit.addEventListener("click",function(e){
+       e.preventDefault();
+
+        document.cmtFrm.submit();
+
+    });*/
+
     function goDelete(){
         const frm = document.getElementById("frmdelete");
         let confirm_flag = confirm("해당 게시글을 삭제하시겠습니까?");

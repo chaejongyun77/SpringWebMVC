@@ -4,18 +4,26 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        https://www.springframework.org/schema/context/spring-context.xsd
        http://mybatis.org/schema/mybatis-spring
-       http://mybatis.org/schema/mybatis-spring.xsd">
+
+       http://mybatis.org/schema/mybatis-spring.xsd
+       http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+
+        http://www.springframework.org/schema/aop
+         https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
     <!--    <bean class="org.fullstack4.springmvc.SampleDAO"/>-->
     <!--    <bean class="org.fullstack4.springmvc.SampleService"/>-->
 
-    <context:component-scan base-package="org.fullstack4.springmvc.sample"/>
+    <context:component-scan base-package="org.fullstack4.springmvc"/>
 
     <!--    <context:component-scan base-package="org.fullstack4.springmvc.controller"/>-->
     <!--    <context:component-scan base-package="org.fullstack4.springmvc.service"/>-->
@@ -42,13 +50,41 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml"></property>
     </bean>
+
+    <!--트랜젝션 관리 객체 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!--aspect사용 설정 -->
+    <aop:aspectj-autoproxy/>
+    <!-- 트랜젝션 AOP설정 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+
+        <tx:attributes>
+            <tx:method name="regist*" rollback-for="Exception"/>
+            <tx:method name="modify*" rollback-for="Exception"/>
+            <tx:method name="delete*" rollback-for="Exception"/>
+            <tx:method name="reply_regist*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--controller method mapping -->
+
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="within(org.fullstack4.springmvc..*)"/>
+        <aop:advisor id="transactionAdvisor" pointcut-ref="transactionPointcut"  advice-ref="txAdvice"></aop:advisor>
+    </aop:config>
+
     <!-- mapper객체 사용하려고 선언 (이 패키지 하위 관리하기 위해) autowired사용을 위해 @controller,@repostiroy등등 -->
     <mybatis:scan base-package="org.fullstack4.springmvc.mapper"></mybatis:scan>
+
 
     <context:component-scan base-package="org.fullstack4.springmvc.config">
 
     </context:component-scan>
     <context:component-scan base-package="org.fullstack4.springmvc.service"></context:component-scan>
+    <context:component-scan base-package="org.fullstack4.springmvc.aop"></context:component-scan>
 
 
 

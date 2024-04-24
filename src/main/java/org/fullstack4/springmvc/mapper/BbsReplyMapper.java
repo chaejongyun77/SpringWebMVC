@@ -9,6 +9,6 @@ public interface BbsReplyMapper {
     int replyRegist(BbsReplyVO bbsReplyVO);
 
     int update_reply_cnt(int bbs_idx);
-    List<BbsReplyVO> replyList();
+    List<BbsReplyVO> replyList(int bbs_idx);
 
 }

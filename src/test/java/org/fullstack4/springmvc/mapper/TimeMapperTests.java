@@ -1,15 +1,11 @@
 package org.fullstack4.springmvc.mapper;
 
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.springmvc.mapper.TimeMapper;
-import org.fullstack4.springmvc.mapper.TimeMapper2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.sql.Time;
 
 @Log4j2
 @ExtendWith(SpringExtension.class)
